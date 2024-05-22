@@ -18,19 +18,23 @@
             <div class="row">
                 <c:forEach items="${productos}" var="item">
                     <div class="col-sm-3 mt-1">
-                        <div class="card">
-                            <img src="assets/productos/${item.imagen}" widht="100%" alt="${item.nombre}"/>
-                            <div class="card-body">
-                                <p class="fw-bold">${item.nombre}</p>
-                                <p>${item.copy}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <button type="button" class="btn btn-sm btn-primaty" style="background-color: greenyellow;">
-                                        <i class="fa fa-shopping-cart"></i> Añadir al carrito
-                                    </button>
-                                    <small class="fw-bold">S/${item.precio}</small>
+                        <form action="CarritoControlador" method="get">
+                            <div class="card">
+                                <img src="assets/productos/${item.imagen}" widht="100%" alt="${item.nombre}"/>
+                                <div class="card-body">
+                                    <p class="fw-bold">${item.nombre}</p>
+                                    <p>${item.copy}</p>
+                                    <input type="hidden" name="accion" value="agregar">
+                                    <input type="hidden" name="id" value="${item.idProd}">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <button type="submit" class="btn btn-sm btn-primaty" style="background-color: greenyellow;">
+                                            <i class="fa fa-shopping-cart"></i> Añadir al carrito
+                                        </button>
+                                        <small class="fw-bold">S/${item.precio}</small>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </c:forEach>
             </div>

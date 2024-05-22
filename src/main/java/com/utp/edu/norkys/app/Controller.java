@@ -1,6 +1,6 @@
 package com.utp.edu.norkys.app;
 
-import com.utp.edu.norkys.config.modelo.DAO.ProductoDAO;
+import com.utp.edu.norkys.modelo.DAO.ProductoDAO;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;

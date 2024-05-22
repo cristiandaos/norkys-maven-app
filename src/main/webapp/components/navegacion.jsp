@@ -20,8 +20,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: white;" href="#">
-                        <i class="fa fa-shopping-cart"></i> (0)  Carrito
+                    <a class="nav-link" style="color: white;" href="CarritoControlador?accion=listar">
+                        <i class="fa fa-shopping-cart"></i> (<span class="fw-bold">${sessionScope.carrito != null ? sessionScope.carrito.size() : 0}</span>)  Carrito
                     </a>
                 </li>
                 <li class="nav-item">

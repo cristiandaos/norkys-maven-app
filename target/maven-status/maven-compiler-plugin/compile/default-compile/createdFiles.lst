@@ -1,0 +1,5 @@
+com\utp\edu\norkys\config\modelo\DAO\ProductoDAO.class
+com\utp\edu\norkys\app\Controller.class
+com\utp\edu\norkys\config\modelo\Producto.class
+com\utp\edu\norkys\config\test.class
+com\utp\edu\norkys\config\Conexion.class
