@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:33065
--- Tiempo de generación: 13-05-2024 a las 11:42:21
+-- Tiempo de generación: 22-05-2024 a las 10:19:45
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -83,14 +83,14 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`id_prod`, `nombre`, `precio`, `imagen`, `copy`) VALUES
-(1, 'Pollo Oferta', 850.00, 'PROD000001.png', '- 1 Pollo entero + papas fritas\r\n- Ensalada tradicional\r\n- Gaseosa 1.5L'),
-(2, 'Combinado familiar', 499.00, 'PROD000002.png', '- 1 Pollo entero + papas fritas + chaufa\r\n- Ensalada tradicional\r\n- Gaseosa 1.5L'),
-(3, 'Combinado Familiar 2', 1099.00, 'PROD000002.png', '- 1 Pollo entero + papas fritas + chaufa\r\n- Ensalada tradicional\r\n- Gaseosa 2L'),
-(4, '1/4 de pollo a la brasa', 3650.00, 'PROD000003.png', '- 1/4 de pollo a la brasa\r\n- papas fritas\r\n- ensalada fresca'),
-(5, '1/4 de pollo a la brasa con gaseosa', 599.00, 'PROD000004.png', '- 1/4 de pollo a la brasa + papas fritas\r\n- ensalada fresca\r\n- gaseosa 600ml'),
-(6, '1/2 pollo a la brasa', 749.00, 'PROD000005.png', '- 1/2 pollo a la brasa\r\n- papas fritas\r\n- ensalada fresca\r\n'),
-(7, '1/2 pollo para 2 personas', 949.00, 'PROD000006.png', '- 1/4 de pollo a la brasa + papas fritas\r\n- ensalada fresca\r\n- 2 gaseosa 600ml'),
-(8, 'Pechuga Norkys', 1569.00, 'PROD000007.png', '- Filete de pechuga de pollo, tocino, queso, champiñones y jamón. Acompañado con papas fritas y ensalada.');
+(1, 'Pollo Oferta', 39.90, 'PROD000001.png', '- 1 Pollo entero\r\n- papas fritas\r\n- ensalada tradicional\r\n- cremas\r\n- gaseosa 1.5L'),
+(2, 'Combinado familiar', 45.90, 'PROD000002.png', '- 1 Pollo entero \r\n- papas fritas \r\n- chaufa\r\n- ensalada tradicional\r\n- cremas\r\n- gaseosa 1.5L'),
+(3, 'Combinado Familiar 2', 55.90, 'PROD000002.png', '- 1 Pollo entero\r\n- papas fritas\r\n- chaufa\r\n- ensalada tradicional\r\n- cremas\r\n- gaseosa 2L'),
+(4, '1/4 de pollo a la brasa', 7.90, 'PROD000003.png', '- 1/4 de pollo a la brasa\r\n- papas fritas\r\n- cremas\r\n- ensalada tradicional fresca'),
+(5, '1/4 de pollo a la brasa con gaseosa', 13.90, 'PROD000004.png', '- 1/4 de pollo a la brasa\r\n- papas fritas\r\n- ensalada tradicional fresca\r\n- cremas\r\n- gaseosa 600ml'),
+(6, '1/2 pollo a la brasa', 34.00, 'PROD000005.png', '- 1/2 pollo a la brasa\r\n- papas fritas\r\n- ensalada tradicional fresca\r\n- cremas\r\n'),
+(7, '1/2 pollo para 2 personas', 38.00, 'PROD000006.png', '- 1/4 de pollo a la brasa\r\n- papas fritas\r\n- ensalada tradicional fresca\r\n- cremas\r\n- 2 gaseosa 600ml'),
+(8, 'Pechuga Norkys', 19.90, 'PROD000007.png', '- Filete de pechuga de pollo con tocino, queso, champiñones y jamón\r\n- papas fritas\r\n- ensalada fresca');
 
 --
 -- Índices para tablas volcadas
