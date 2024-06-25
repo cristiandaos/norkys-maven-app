@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -32,6 +33,7 @@
                                             <th>Acción</th>
                                         </tr>
                                     </thead>
+                                    
                                     <tbody>
                                         <c:forEach items="${carrito}" var="item" varStatus="loop">
                                             <tr>
@@ -72,17 +74,25 @@
                                     <p class="mb-2">Total</p>
                                     <p class="mb-2">S/.${total}</p>
                                 </div>
-                                <button class="btn btn-block btn-lg" style="background-color: #AEB453; border-radius: 30px;">
+                                <form action="CarritoControlador" method="get">
+                                    <input type="hidden" name="accion" value="procesar">
+                                    <button  type="submit" class="btn btn-block btn-lg" style="background-color: #AEB453; border-radius: 30px;">
                                     <div class="justify-content-between">
                                         <span style="font-weight: bold"><i class="fa fa-credit-card" ></i> PROCESAR</span>
                                     </div>
-                                </button>
+                                    </button>
+                                </form>
+                                    
+                               
+                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+                              
+        <jsp:include page="components/footer.jsp" />
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>

@@ -6,11 +6,35 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductoDAO {
     private Connection cn = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
+    
+    public void insertarProducto(com.utp.edu.norkys.modelo.Producto producto) {
+
+        try {
+            cn = Conexion.getConnection();
+            String sql = "INSERT INTO producto (nombre, copy, precio, imagen) VALUES (?, ?, ?, ?)";
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, producto.getNombre());
+            ps.setString(2, producto.getCopy());
+            ps.setDouble(3, producto.getPrecio());
+            ps.setString(4, producto.getImagen());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (cn != null) cn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
     
     public ArrayList<Producto> ListarTodos(){
         ArrayList<Producto> lista = new ArrayList<Producto>();
@@ -90,5 +114,44 @@ public class ProductoDAO {
         }
 
         return obj;
+    }
+    
+     public static List<ProductoCantidad> obtenerProductosCantidad() {
+        List<ProductoCantidad> datos = new ArrayList<>();
+
+        String sql = "SELECT p.nombre, SUM(dp.cantidad) AS cantidad " +
+                     "FROM detalle_pedido dp " +
+                     "INNER JOIN producto p ON dp.id_prod = p.id_prod " +
+                     "GROUP BY p.nombre";
+
+        // Declaración de variables dentro del método
+        Connection cn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            cn = Conexion.getConnection();
+            ps = cn.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String nombre = rs.getString("nombre");
+                int cantidad = rs.getInt("cantidad");
+                ProductoCantidad producto = new ProductoCantidad(nombre, cantidad);
+                datos.add(producto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (cn != null) cn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return datos;
     }
 }

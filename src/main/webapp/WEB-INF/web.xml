@@ -21,4 +21,17 @@
             30
         </session-timeout>
     </session-config>
+
+    <servlet>
+        <servlet-name>ClienteControlador_serv</servlet-name>
+        <servlet-class>com.utp.edu.norkys.controller.ClienteControlador_serv</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ClienteControlador_serv</servlet-name>
+        <url-pattern>/ClienteControlador</url-pattern>
+    </servlet-mapping>
+    
+    
+
 </web-app>

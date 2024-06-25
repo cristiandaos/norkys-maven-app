@@ -1,22 +1,29 @@
 package com.utp.edu.norkys.controller;
 
+import com.utp.edu.norkys.modelo.DAO.PedidoDAO;
+import com.utp.edu.norkys.modelo.Cliente;
 import com.utp.edu.norkys.modelo.DAO.ProductoDAO;
 import com.utp.edu.norkys.modelo.DetallePedido;
+import com.utp.edu.norkys.modelo.Pedido;
 import com.utp.edu.norkys.modelo.Producto;
 import com.utp.edu.norkys.util.Carrito;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class CarritoControlador extends HttpServlet {
     private String PagListarCarrito = "PagCarrito.jsp";
     private String PagInicio = "index.jsp";    
     private ProductoDAO prodDao = new ProductoDAO();
     private Carrito objCarrito = new Carrito();
+    
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -33,6 +40,10 @@ public class CarritoControlador extends HttpServlet {
             case "eliminar":
                 Eliminar(request, response);
                 break; 
+            case "procesar":
+                procesar(request, response);
+                break; 
+             
             default:
                 throw new AssertionError();
         }
@@ -73,6 +84,65 @@ public class CarritoControlador extends HttpServlet {
 
         response.sendRedirect("CarritoControlador?accion=listar");
     }
+    
+    
+        protected void procesar(HttpServletRequest request, HttpServletResponse response)
+                throws ServletException, IOException {
+            HttpSession session = request.getSession();
+            Cliente cliente = (Cliente) session.getAttribute("cliente");
+
+            // Verificar si el cliente ha iniciado sesión
+            if (cliente == null) {
+                response.sendRedirect("login.jsp");
+                return;
+            }
+
+            // Obtener la lista del carrito de la sesión
+            ArrayList<DetallePedido> carrito = ObtenerSesion(request);
+
+            // Guardar la lista del carrito en la base de datos
+            PedidoDAO pedidoDAO = new PedidoDAO();
+            Pedido pedido = new Pedido();
+            pedido.setCliente(cliente);
+            pedido.setDetalles(carrito);
+
+            boolean success = false;
+            try {
+                success = pedidoDAO.guardarPedido(pedido);
+            } catch (Exception e) {
+                e.printStackTrace(); // Mejor usar un logger en producción
+                success = false;
+            }
+
+            if (success) {
+                request.setAttribute("mensaje", "Pedido procesado con éxito.");
+                session.removeAttribute("carrito");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("session.jsp");
+                dispatcher.forward(request, response);
+            } else {
+                request.setAttribute("mensaje", "Error al procesar el pedido.");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+                dispatcher.forward(request, response);
+            }
+        }
+
+        // Asegúrate de que este método esté bien implementado
+        private ArrayList<DetallePedido> ObtenerSesion(HttpServletRequest request) {
+            HttpSession session = request.getSession();
+            @SuppressWarnings("unchecked")
+            ArrayList<DetallePedido> carrito = (ArrayList<DetallePedido>) session.getAttribute("carrito");
+            if (carrito == null) {
+                carrito = new ArrayList<>();
+            }
+            return carrito;
+        }
+
+            protected void agregarEmp(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        
+    }
+            
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
