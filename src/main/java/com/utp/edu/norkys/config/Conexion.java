@@ -7,7 +7,7 @@ public class Conexion {
     private static String database = "norkysdb";
     private static String username = "root";
     private static String password = "";
-    private static String url = "jdbc:mysql://localhost:33065/"+database;
+    private static String url = "jdbc:mysql://localhost:3306/"+database;
     
     public static Connection getConnection(){
         Connection conn = null;

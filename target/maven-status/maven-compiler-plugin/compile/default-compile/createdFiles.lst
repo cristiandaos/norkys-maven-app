@@ -1,5 +1,10 @@
 com\utp\edu\norkys\config\modelo\DAO\ProductoDAO.class
-com\utp\edu\norkys\app\Controller.class
+com\utp\edu\norkys\modelo\Producto.class
 com\utp\edu\norkys\config\modelo\Producto.class
-com\utp\edu\norkys\config\test.class
 com\utp\edu\norkys\config\Conexion.class
+com\utp\edu\norkys\modelo\DAO\ProductoDAO.class
+com\utp\edu\norkys\app\Controller.class
+com\utp\edu\norkys\controller\CarritoControlador.class
+com\utp\edu\norkys\modelo\DetallePedido.class
+com\utp\edu\norkys\config\test.class
+com\utp\edu\norkys\util\Carrito.class
