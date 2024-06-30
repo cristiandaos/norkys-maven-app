@@ -30,48 +30,7 @@ public class ClienteDAO {
    
     PreparedStatement pst;
     
-    /*
-    public boolean autenticar(String correo, String password){
-        ps=null;
-        rs=null;
-            
-            try{
-                
-            cn = Conexion.getConnection();
-            String sql ="select * from cliente where correo = ? and password= ?;";
-             ps = cn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            
-                ps.setString(1, correo);
-                ps.setString(2, password);
-               
-            rs = ps.executeQuery();
-            if(rs.absolute(1)) return true;
-            
-            
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally{
-            try{
-                if(cn != null){
-                    cn.close();
-                }
-                if(ps != null){
-                    ps.close();
-                }
-                if(rs != null){
-                    rs.close();
-                }
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-        }
-            
-            
-
-        
-        return false;
-    }
-     */
+   
     
     public boolean registrarCliente(String nombres, String apellidos, String telefono, String correo, String password, String roles){
         

@@ -43,7 +43,12 @@ public class CarritoControlador extends HttpServlet {
             case "procesar":
                 procesar(request, response);
                 break; 
-             
+             case "AumentarCantidad":
+                AumentarCantidad(request, response);
+                break; 
+             case "DisminuirCantidad":
+                DisminuirCantidad(request, response);
+                break; 
             default:
                 throw new AssertionError();
         }
@@ -126,7 +131,7 @@ public class CarritoControlador extends HttpServlet {
             }
         }
 
-        // Asegúrate de que este método esté bien implementado
+        
         private ArrayList<DetallePedido> ObtenerSesion(HttpServletRequest request) {
             HttpSession session = request.getSession();
             @SuppressWarnings("unchecked")
@@ -143,6 +148,45 @@ public class CarritoControlador extends HttpServlet {
         
     }
             
+    protected void AumentarCantidad(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+                  response.setContentType("text/html;charset=UTF-8");
+        int idProd = Integer.parseInt(request.getParameter("id"));
+        Producto obj = prodDao.BuscarPorId(idProd);
+        if(obj != null) {
+            DetallePedido objDet = new DetallePedido();
+            objDet.setProducto(obj);
+            objDet.setCantidad(1);
+            
+            objCarrito.AgregarCarrito(objDet, request);
+            
+            
+        }
+        ArrayList<DetallePedido> lista = objCarrito.ObtenerSesion(request);
+        request.setAttribute("total", objCarrito.ImporteTotal(lista));
+        response.sendRedirect("CarritoControlador?accion=listar");
+
+    }
+       
+    protected void DisminuirCantidad(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+                  response.setContentType("text/html;charset=UTF-8");
+        int idProd = Integer.parseInt(request.getParameter("id"));
+        Producto obj = prodDao.BuscarPorId(idProd);
+        if(obj != null) {
+            DetallePedido objDet = new DetallePedido();
+            objDet.setProducto(obj);
+            objDet.setCantidad(-1);
+            
+            objCarrito.AgregarCarrito(objDet, request);
+            
+            
+        }
+        ArrayList<DetallePedido> lista = objCarrito.ObtenerSesion(request);
+        request.setAttribute("total", objCarrito.ImporteTotal(lista));
+        response.sendRedirect("CarritoControlador?accion=listar");
+
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

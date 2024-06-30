@@ -1,5 +1,7 @@
 package com.utp.edu.norkys.modelo;
 
+import java.text.DecimalFormat;
+
 public class Producto {
     private int idProd;
     private String nombre;
@@ -24,11 +26,14 @@ public class Producto {
     }
 
     public double getPrecio() {
-        return precio;
+         DecimalFormat df = new DecimalFormat("#.0000");
+        return Double.parseDouble(df.format(precio));
+        
     }
 
     public void setPrecio(double precio) {
-        this.precio = precio;
+         DecimalFormat df = new DecimalFormat("#.0000");
+         this.precio = Double.parseDouble(df.format(precio));
     }
 
     public String getImagen() {

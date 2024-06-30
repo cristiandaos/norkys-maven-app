@@ -1,7 +1,9 @@
 package com.utp.edu.norkys.modelo;
 
+import java.text.DecimalFormat;
 
-public class DetallePedido {
+
+ public class DetallePedido {
 
   
     private Producto producto;
@@ -9,6 +11,8 @@ public class DetallePedido {
      private int id_detalle_ped;
      private int id_ped;
      private double precio;
+     private double subTotal;
+     private double Total;
      
       public DetallePedido() {
     }
@@ -38,20 +42,27 @@ public class DetallePedido {
     }
 
     public double getPrecio() {
-        return precio;
+        DecimalFormat df = new DecimalFormat("#.0000");
+        return Double.parseDouble(df.format(precio));
     }
 
     public void setPrecio(double precio) {
-        this.precio = precio;
+        DecimalFormat df = new DecimalFormat("#.0000");
+        this.precio = Double.parseDouble(df.format(precio));
     }
   
       
     public void AumentarCantidad(int cantidad){
         this.cantidad += cantidad;
     }
+    
+    public void DisminuirCantidad(int cantidad){
+        this.cantidad -= cantidad;
+    }
 
     public double Importe(){
-        return producto.getPrecio() * cantidad;
+          DecimalFormat df = new DecimalFormat("#.0000");
+        return Double.parseDouble(df.format(producto.getPrecio() * cantidad));
     } 
     
     public Producto getProducto() {
@@ -72,5 +83,8 @@ public class DetallePedido {
     
     public void setTotal() {
         double total= (this.precio)*this.cantidad;
+    }
+    public void setSubTotal(double st) {
+        this.subTotal= st;
     }
 }

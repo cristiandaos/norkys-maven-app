@@ -19,15 +19,7 @@
                         <i class="fa fa-home"></i> Inicio
                     </a>
                 </li>
-                <li class="nav-item">
-
-                   
-
-                    <a class="nav-link active" aria-current="page" href="#" style="color: white;">
-
-                        <i class="fa fa-bowl-food"></i> Platos
-                    </a>
-                </li>
+               
                 <li class="nav-item">
                     <a class="nav-link" style="color: white;" href="CarritoControlador?accion=listar">
                         <i class="fa fa-shopping-cart"></i> (<span class="fw-bold">${sessionScope.carrito != null ? sessionScope.carrito.size() : 0}</span>)  Carrito
@@ -61,8 +53,8 @@
                         <a class="nav-link active" aria-current="page" href="dashboard.jsp" style="color: white; border-radius: 50px; margin-right: 12px; background-color: #AEB453">
                             <i class="fa fa-home"></i> Dashboard
                         </a>
-                    </ul>
-                        <a href="consulta.jsp" style=" margin-right: 12px;"><i class="fa-solid fa-magnifying-glass fa-2x text-secondary"></i></a>
+                        </ul>
+                        
                     <%
                     }else{
                         if("2".equals(rol)){

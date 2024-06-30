@@ -1,6 +1,7 @@
 package com.utp.edu.norkys.util;
 
 import com.utp.edu.norkys.modelo.DetallePedido;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,12 +22,29 @@ public class Carrito {
         GuardarSesion(request, lista);
     }
     
+    public void DisminuirCarrito(DetallePedido detalle, HttpServletRequest request){
+        ArrayList<DetallePedido> lista = ObtenerSesion(request);
+        int posc = ExisteProducto(lista, detalle.getProducto().getIdProd());
+        
+        if(posc == -1) {
+            lista.add(detalle);
+        }else{
+            DetallePedido objDet = lista.get(posc);
+            objDet.DisminuirCantidad(detalle.getCantidad());
+            lista.set(posc, objDet);
+        }
+        GuardarSesion(request, lista);
+    }
+    
+    
+    
     public double ImporteTotal(ArrayList<DetallePedido> lista){
         double total = 0;
         for(DetallePedido item : lista){
             total += item.Importe();
         }
-        return total;
+        DecimalFormat df = new DecimalFormat("#.0000");
+        return Double.parseDouble(df.format(total));
     }
     
     public void RemoverItemCarrito(HttpServletRequest request, int indice){
