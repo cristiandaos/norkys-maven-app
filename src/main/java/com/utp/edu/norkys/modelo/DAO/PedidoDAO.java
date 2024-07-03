@@ -9,6 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PedidoDAO {
      private Connection cn = null;
@@ -85,6 +89,38 @@ public class PedidoDAO {
     return success;
 }
 
+    
+      public static List<Map<String, Object>> obtenerDatosPedidos() {
+        List<Map<String, Object>> listaDatos = new ArrayList<>();
+        try {
+            // Establece la conexión con la base de datos
+            Connection cn = null;
+
+            cn = Conexion.getConnection();
+
+
+            // Consulta SQL para obtener los datos
+            String sql = "SELECT fecha_ped, total FROM pedido";
+            PreparedStatement stmt = cn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            // Procesa los resultados
+            while (rs.next()) {
+                Map<String, Object> dato = new HashMap<>();
+                dato.put("fecha_ped", rs.getString("fecha_ped"));
+                dato.put("total", rs.getDouble("total"));
+                listaDatos.add(dato);
+            }
+
+            rs.close();
+            stmt.close();
+            cn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return listaDatos;
+    }
 
     
     

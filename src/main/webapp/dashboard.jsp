@@ -6,6 +6,8 @@
 
 
 
+<%@page import="java.util.Map"%>
+<%@page import="com.utp.edu.norkys.modelo.DAO.PedidoDAO"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%//@ page import="com.utp.edu.norkys.modelo.DAO.ProductoCantidad"%>
@@ -24,7 +26,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
-        <link rel="icon" type="image/png" href="./assets/img/favicon.png">
+        <link rel="icon" type="image/png" href="./assets/img/logo_norkys.png">
         <title>
             Dashboard NORKYS
         </title>
@@ -72,11 +74,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./pages/agregar.jsp">
+                            <a class="nav-link" href="#">
                                 <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                     <i class="ni ni-app text-info text-sm opacity-10"></i>
                                 </div>
-                                <span class="nav-link-text ms-1">Agregar Cliente</span>
+                               <span class="nav-link-text ms-1">Info</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -117,7 +119,7 @@
                                                 <p class="text-sm mb-0 text-uppercase font-weight-bold">N° Productos</p>
                                                 <br>
                                                 <h5 class="font-weight-bolder">
-                                                    53,000
+                                                    15
                                                 </h5>
 
                                             </div>
@@ -170,7 +172,7 @@
                                                 <p class="text-sm mb-0 text-uppercase font-weight-bold">Colaboradores</p>
                                                 <br><!-- comment -->
                                                 <h5 class="font-weight-bolder">
-                                                    +3,462
+                                                    10
                                                 </h5>
 
                                             </div>
@@ -265,8 +267,50 @@
                             </div>
                         </div>
                     </div>
+            
+                    <br>
+                      <canvas id="ventasMensuales" width="400" height="200"></canvas>
 
+                        <%
+                            List<Map<String, Object>> datosPedidos = PedidoDAO.obtenerDatosPedidos();
+                            String jsonDatos = UtilidadesJson.convertirAJson(datosPedidos);
+                            System.out.println("Datos JSON: " + jsonDatos); // Verifica el JSON generado en la consola del servidor
+                        %>
+
+                        <script>
+                            // Parse JSON data from JSP
+                            const datosPedidos = <%= jsonDatos %>;
+                            console.log("Datos recibidos en JavaScript:", datosPedidos); // Verifica los datos en la consola del navegador
+
+                            // Process data for Chart.js
+                            const labels = datosPedidos.map(dato => dato.fecha_ped); // Ajusta la propiedad 'fecha_ped' según tu JSON
+                            const data = datosPedidos.map(dato => dato.total);
+
+                            const ctx = document.getElementById('ventasMensuales').getContext('2d');
+                            const ventasMensuales = new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: labels,
+                                    datasets: [{
+                                        label: 'Ventas Mensuales',
+                                        data: data,
+                                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                        borderColor: 'rgba(75, 192, 192, 1)',
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    }
+                                }
+                            });
+                        </script>
                 </div>
+        
+        
             </main>
 
             <script>
@@ -303,17 +347,12 @@
             </script>
 
 
-
-
-
             <!--   Core JS Files   -->
             <script src="./assets/js/core/popper.min.js"></script>
             <script src="./assets/js/core/bootstrap.min.js"></script>
             <script src="./assets/js/plugins/perfect-scrollbar.min.js"></script>
             <script src="./assets/js/plugins/smooth-scrollbar.min.js"></script>
             <script src="./assets/js/plugins/chartjs.min.js"></script>
-
-
 
             <script>
                 var win = navigator.platform.indexOf('Win') > -1;
@@ -328,7 +367,6 @@
             <script async defer src="https://buttons.github.io/buttons.js"></script>
             <script src="./assets/js/argon-dashboard.min.js?v=2.0.4"></script>
         </div>
-
 
         <script>
                 // Toggle Sidenav
@@ -435,6 +473,9 @@
                 });
             });
         </script>
+        <br><br>
+        <br><br>
+        <jsp:include page="components/footer.jsp" />
     </body>
 
 </html>

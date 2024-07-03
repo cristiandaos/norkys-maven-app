@@ -64,11 +64,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="../pages/agregar.jsp">
+                        <a class="nav-link " href="#">
                             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-app text-info text-sm opacity-10"></i>
                             </div>
-                            <span class="nav-link-text ms-1">Agregar Cliente</span>
+                            <span class="nav-link-text ms-1">Info</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -105,7 +105,7 @@
         <h1 class="ms-md-8 ps-md-12">Busqueda de Clientes</h1>
         <div class="container buscar">    
             <br>
-            <a href="agregar.jsp" class="btn btn-success ms-md-12 ">+Nuevo</a>
+            
             <div style="padding-left: 800px">                  
             <form class="form ">
                 <input type="text" class="form-control" name="txtbuscar"/>
@@ -132,7 +132,7 @@
                             <th>Nombres</th>
                             <th class="text-center">Apellidos</th>
                             <th class="text-center">Correo</th>
-                            <th class="text-center">Password</th>
+                          
                             <th class="text-center">Telefono</th>
                         </tr>
                     </thead>
@@ -145,7 +145,7 @@
                             <td><%= rs.getString("nombres")%></td>
                             <td class="text-center"><%= rs.getString("apellidos")%></td>
                             <td class="text-center"><%= rs.getString("correo")%></td>
-                            <td class="text-center"><%= rs.getString("password")%></td>
+                            
                             <td class="text-center"><%= rs.getString("telefono")%></td>
                             <td class="text-center">
                                 <a href="editar.jsp?id=<%= rs.getInt("id_cli")%>" class="btn btn-primary">Editar</a>
@@ -157,6 +157,9 @@
             </div>        
                         
         <script src="js/jquery.js" type="text/javascript"></script>             
-        <script src="js/bootstrap.min.js" type="text/javascript"></script>        
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+<br><br>
+<br><br>
+        <jsp:include page="../components/footer.jsp" />        
     </body>
 </html>
