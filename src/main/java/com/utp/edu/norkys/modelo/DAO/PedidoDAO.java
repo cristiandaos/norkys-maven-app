@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpSession;
 
 public class PedidoDAO {
      private Connection cn = null;
@@ -28,7 +29,7 @@ public class PedidoDAO {
  
     
     
-    public boolean guardarPedido(Pedido pedido) {
+   public boolean guardarPedido(Pedido pedido, HttpSession session) {
     Connection conn = null;
     PreparedStatement stmtPedido = null;
     PreparedStatement stmtDetalle = null;
@@ -41,7 +42,7 @@ public class PedidoDAO {
         String sqlPedido = "INSERT INTO pedido (id_cli, fecha_ped, total) VALUES (?, ?, ?)";
         stmtPedido = conn.prepareStatement(sqlPedido, PreparedStatement.RETURN_GENERATED_KEYS);
         stmtPedido.setInt(1, pedido.getCliente().getId_cli());
-        stmtPedido.setDate(2, new java.sql.Date(System.currentTimeMillis()));
+        stmtPedido.setTimestamp(2, new java.sql.Timestamp(System.currentTimeMillis()));
         stmtPedido.setDouble(3, pedido.getTotal());
         stmtPedido.executeUpdate();
 
@@ -49,6 +50,7 @@ public class PedidoDAO {
         ResultSet rs = stmtPedido.getGeneratedKeys();
         if (rs.next()) {
             int id_ped = rs.getInt(1);
+            session.setAttribute("id_ped", id_ped); // Guardar id_ped en la sesión
 
             String sqlDetalle = "INSERT INTO detalle_pedido (id_ped, id_prod, precio, cantidad) VALUES (?, ?, ?, ?)";
             stmtDetalle = conn.prepareStatement(sqlDetalle);
@@ -123,6 +125,105 @@ public class PedidoDAO {
     }
 
     
-    
+public List<Map<String, Object>> obtenerDetallesPedido(int id_ped) {
+    List<Map<String, Object>> detalles = new ArrayList<>();
+
+    try (Connection cn = Conexion.getConnection();
+         PreparedStatement ps = cn.prepareStatement(
+                 "SELECT detalle_pedido.id_ped, producto.nombre, detalle_pedido.precio, detalle_pedido.cantidad, " +
+                 "(detalle_pedido.precio * detalle_pedido.cantidad) as importe " +
+                 "FROM detalle_pedido, producto " +
+                 "WHERE detalle_pedido.id_prod = producto.id_prod AND detalle_pedido.id_ped = ?")) {
+
+        ps.setInt(1, id_ped);
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Map<String, Object> detalle = new HashMap<>();
+                detalle.put("id_ped", rs.getInt("id_ped"));
+                detalle.put("nombre", rs.getString("nombre"));
+                detalle.put("precio", rs.getDouble("precio"));
+                detalle.put("cantidad", rs.getInt("cantidad"));
+                detalle.put("importe", rs.getDouble("importe"));
+                detalles.add(detalle);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return detalles;
+}
+public List<Map<String, Object>> obtenerTotal(int id_ped) {
+    List<Map<String, Object>> detalles = new ArrayList<>();
+
+    try (Connection cn = Conexion.getConnection();
+         PreparedStatement ps = cn.prepareStatement(
+                 "select  sum(detalle_pedido.precio*detalle_pedido.cantidad) as total from detalle_pedido where id_ped=?")) {
+
+        ps.setInt(1, id_ped);
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Map<String, Object> detalle = new HashMap<>();
+                detalle.put("total", rs.getDouble("total"));
+                
+                detalles.add(detalle);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return detalles;
+}
+
+
+
+public int obtenerUltimoIdPedido(int id_cli) {
+    int id_ped = -1; // Valor predeterminado en caso de no encontrar ningún pedido
+
+    try (Connection cn = Conexion.getConnection();
+         PreparedStatement ps = cn.prepareStatement(
+                 "SELECT id_ped FROM pedido WHERE id_cli = ? ORDER BY fecha_ped DESC LIMIT 1")) {
+        
+        ps.setInt(1, id_cli);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                id_ped = rs.getInt("id_ped");
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return id_ped;
+}
+
+
+public List<Map<String, Object>> obtenerHistorial(int id_cli) {
+    List<Map<String, Object>> detalles = new ArrayList<>();
+
+    try (Connection cn = Conexion.getConnection();
+         PreparedStatement ps = cn.prepareStatement(
+                 "SELECT id_ped, fecha_ped, total FROM norkysdb.pedido WHERE id_cli= ?")) {
+
+        ps.setInt(1, id_cli);
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Map<String, Object> detalle = new HashMap<>();
+                detalle.put("id_ped", rs.getInt("id_ped"));
+                detalle.put("fecha_ped", rs.getString("fecha_ped"));
+                detalle.put("total", rs.getDouble("total"));
+                
+                detalles.add(detalle);
+            }
+        }
+        
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return detalles;
+}
     
 }

@@ -5,10 +5,8 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="index.jsp">
             <img src="./assets/img/logo_norkys.png" alt="Norkys"/>
-
-
-
         </a>
+        
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -37,9 +35,9 @@
                 %>
                 
                     
-                    <span style="color: white; margin-right: 12px;">Bienvenido ${sessionScope.nombre}</span> 
+                    <b><span style="color: white; margin-right: 12px; font-size: 22px;">Bienvenido ${sessionScope.nombre}</span> </b>
                     <%
-                    if("1".equals(rol)){
+                    if("1".equals(rol)){ //VISTA DE ADMINISTRACION
                     %>
                     
                         <span style="color: white; margin-right: 12px;">Administración </span>
@@ -57,11 +55,25 @@
                         
                     <%
                     }else{
-                        if("2".equals(rol)){
+                        if("2".equals(rol)){ //VISTA DEL EMPLEADO
                     %>
+                        
                         <span style="color: white; margin-right: 12px;"> Empleado </span>
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="registroArticulo.jsp" style="color: white; border-radius: 50px; margin-right: 12px; background-color: #AEB453">
+                                    <i class="fa fa-home"></i> Registro-Platillos
+                                </a>
+                            </li>
+                        
+                        </ul>
                     <%
-                        }
+                        }else{ //VISTA DEL CLIENTE
+                     %>
+                     <a href="./historialCliente.jsp"><i class="btn-icon-user fas fa-user" style="margin-right: 5px;color: #ffff;font-size: 32px; margin-right:20px;"></i></a>
+
+                     <%   
+                         }
                     }
                     %>
                     <a href="components/logout.jsp" class="btn btn-dark" style="border-radius: 50px; background-color: #AEB453">Logout</a>

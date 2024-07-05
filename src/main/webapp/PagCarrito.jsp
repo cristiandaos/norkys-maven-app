@@ -107,7 +107,7 @@
                                     <p class="mb-2">Total</p>
                                     <p class="mb-2 total">S/.${total}</p>
                                 </div>
-                                <form action="CarritoControlador" method="get">
+                                <form action="pago.jsp" method="get">
                                     <input type="hidden" name="accion" value="procesar">
                                     <button type="submit" class="btn btn-block btn-lg" style="background-color: #AEB453; border-radius: 30px;">
                                         <div class="justify-content-between">

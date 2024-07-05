@@ -113,7 +113,7 @@ public class CarritoControlador extends HttpServlet {
 
             boolean success = false;
             try {
-                success = pedidoDAO.guardarPedido(pedido);
+                success = pedidoDAO.guardarPedido(pedido,session);
             } catch (Exception e) {
                 e.printStackTrace(); // Mejor usar un logger en producción
                 success = false;
@@ -122,7 +122,7 @@ public class CarritoControlador extends HttpServlet {
             if (success) {
                 request.setAttribute("mensaje", "Pedido procesado con éxito.");
                 session.removeAttribute("carrito");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("session.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("sesionCliente.jsp");
                 dispatcher.forward(request, response);
             } else {
                 request.setAttribute("mensaje", "Error al procesar el pedido.");

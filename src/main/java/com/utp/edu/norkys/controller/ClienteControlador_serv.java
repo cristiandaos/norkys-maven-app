@@ -3,13 +3,18 @@ package com.utp.edu.norkys.controller;
 
 import com.utp.edu.norkys.modelo.Cliente;
 import com.utp.edu.norkys.modelo.DAO.ClienteDAO;
+import com.utp.edu.norkys.modelo.DAO.PedidoDAO;
 import com.utp.edu.norkys.modelo.DAO.ProductoDAO;
 import com.utp.edu.norkys.modelo.DetallePedido;
+import com.utp.edu.norkys.modelo.Empleado;
 import com.utp.edu.norkys.modelo.Producto;
 import com.utp.edu.norkys.util.Carrito;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.util.List;
+import java.util.Map;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +32,7 @@ public class ClienteControlador_serv extends HttpServlet {
     private String PagInicio = "index.jsp";    
     private ClienteDAO clienDao = new ClienteDAO();
     private Carrito objCarrito = new Carrito();
+    private PedidoDAO pedidoDAO = new PedidoDAO();
 
    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -64,6 +70,9 @@ public class ClienteControlador_serv extends HttpServlet {
             case "registrarCliente":
                 registrarCliente(request, response);
                 break;
+            case "historialCliente":
+                historialCliente(request, response);
+                break;
            
             default:
                 throw new AssertionError();
@@ -91,6 +100,7 @@ public class ClienteControlador_serv extends HttpServlet {
                     if (cliente != null) {
                         HttpSession session = request.getSession();
                         session.setAttribute("cliente", cliente);
+                        session.setAttribute("id_cli", cliente.getId_cli());
                         session.setAttribute("nombre", cliente.getNombres()); // Asegurar que se establece el nombre en la sesión
                         session.setAttribute("roles", cliente.getRoles());
                         
@@ -137,12 +147,33 @@ public class ClienteControlador_serv extends HttpServlet {
 
 
     }
+            
+            
+            
+            
+    protected void historialCliente(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+        
+         HttpSession session = request.getSession();
+        Integer id_cli = (Integer) session.getAttribute("id_cli");
+
+        if (id_cli == null) {
+            response.sendRedirect("error.jsp");
+            return;
+        }
+       try {
+            List<Map<String, Object>> pedidoHist = pedidoDAO.obtenerHistorial(id_cli);
+            request.setAttribute("pedidoHist", pedidoHist);
+         
+        request.getRequestDispatcher("historialCliente.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    
     @Override
     public String getServletInfo() {
         return "Short description";

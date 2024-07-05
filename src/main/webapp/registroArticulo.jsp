@@ -19,7 +19,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
-        <link rel="icon" type="image/png" href="./assets/img/logo_norkys.png">
+        <link rel="icon" type="image/png" href="./assets/img/favicon.png">
         <title>
             Registrar Articulos
         </title>
@@ -45,61 +45,80 @@
                 </a>
             </div>
         </nav>
+            <div class="g-sidenav-show   bg-gray-100 ">
+                <%
+                    // Obtener atributos de la sesión
+                    String acceso = request.getSession().getAttribute("nombre").toString();
+                    String rol = request.getSession().getAttribute("roles").toString();
+                %>
+                
+                    <%
+                    if("2".equals(rol)){
+                    %>
+                    
+                     <%
+                         }else{
+                    %>
+                        <aside class=" bg-white  navbar-vertical navbar-expand-xs border-0 border-radius-xl my-8 fixed-start ms-3 " id="sidenav-main">
+                            <div class="sidenav-header p-4 ms-6">
+                                <p>Dashboard</p>
+                            </div>
+                            <hr class="horizontal dark mt-0">
+                            <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link " href="./dashboard.jsp">
+                                            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                                <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+                                            </div>
+                                            <span class="nav-link-text ms-1">Principal</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " href="./pages/consulta.jsp">
+                                            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                                <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                                            </div>
+                                            <span class="nav-link-text ms-1">Cliente</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">
+                                            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                                <i class="ni ni-app text-info text-sm opacity-10"></i>
+                                            </div>
+                                            <span class="nav-link-text ms-1">Info</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " href="./registroEmp.jsp">
+                                            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                                <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+                                            </div>
+                                            <span class="nav-link-text ms-1">Agregar Empleado</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active " href="../registroArticulo.jsp">
+                                            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                                <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+                                            </div>
+                                            <span class="nav-link-text ms-1">Agregar Platillos</span>
+                                        </a>
+                                    </li>
 
-        <div class="g-sidenav-show   bg-gray-100 ">
+                                </ul>
+                            </div>
+
+                        </aside>
+                    
+                    <%
+                         }
+                    %>
+        
+        
             <div class="min-height-300  position-absolute w-100"></div>
-            <aside class=" bg-white  navbar-vertical navbar-expand-xs border-0 border-radius-xl my-8 fixed-start ms-3 " id="sidenav-main">
-                <div class="sidenav-header p-4 ms-6">
-                    <p>Dashboard</p>
-                </div>
-                <hr class="horizontal dark mt-0">
-                <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link " href="./dashboard.jsp">
-                                <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
-                                </div>
-                                <span class="nav-link-text ms-1">Principal</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " href="./pages/consulta.jsp">
-                                <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                                </div>
-                                <span class="nav-link-text ms-1">Cliente</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="ni ni-app text-info text-sm opacity-10"></i>
-                                </div>
-                                <span class="nav-link-text ms-1">Info</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " href="./registroEmp.jsp">
-                                <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
-                                </div>
-                                <span class="nav-link-text ms-1">Agregar Empleado</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="./registroArticulo.jsp">
-                                <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
-                                </div>
-                                <span class="nav-link-text ms-1">Agregar Platillos</span>
-                            </a>
-                        </li>
-
-                    </ul>
-                </div>
-
-            </aside>
+            
 
             <div class="row d-flex justify-content-end align-items-center h-100">
                 <div class="col col-xl-10">
@@ -112,39 +131,35 @@
                             <div class="col-md-6 col-lg-7 d-flex align-items-center">
                                 <div class="card-body p-4 p-lg-5 text-black">
 
-                                    <form action="ProductoControlador" method="post" >
-
+                                    <form action="ProductoControlador" method="post" enctype="multipart/form-data">
                                         <div class="d-flex align-items-center mb-3 pb-1">
                                             <img src="assets/img/logo_norkys.png" alt="alt"/>
-
                                         </div>
-
                                         <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Agrege un nuevo combo al Menu</h5>
-
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             <input type="text" name="nombre" id="exampleInputNombre" class="form-control form-control-lg" placeholder="Ingrese el nombre del Combo" />
                                             <label class="form-label" for="exampleInputNombre">Nombre del Combo</label>
                                         </div>
-
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             <input type="text" name="precio" id="exampleInputPrecio" class="form-control form-control-lg" placeholder="Ingrese el Precio"/>
                                             <label class="form-label" for="exampleInputPrecio">Precio del combo</label>
                                         </div>
-
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             <input name="copy" id="exampleInputCopy" class="form-control form-control-lg" placeholder="Ingresa los Platillos" rows="4"/>
                                             <label class="form-label" for="exampleInputCopy"></label>
                                         </div>
-
+                                        <div class="form-outline mb-4">
+                                            <input type="file" name="imagen" id="exampleInputImagen" class="form-control form-control-lg" accept="image/png"/>
+                                            <label class="form-label" for="exampleInputImagen">Subir Imagen</label>
+                                        </div>
                                         <input type="hidden" name="accion" value="registrarProducto">
-
                                         <div class="pt-1 mb-4">
                                             <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-dark btn-lg btn-block" type="button">Agregar Nuevo Combo</button>
                                         </div>
-
                                         <a href="#!" class="small text-muted">Terms of use. </a>
                                         <a href="#!" class="small text-muted">Privacy policy</a>
                                     </form>
+
 
                                 </div>
                             </div>
@@ -154,7 +169,5 @@
             </div>
 
         </div>
-        <br><br>
-        <jsp:include page="components/footer.jsp" />
     </body>
 </html>
